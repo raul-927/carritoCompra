@@ -26,7 +26,7 @@ public interface ProductCartMapper {
 	@DeleteProvider(type = ProductCartSqlProvider.class, method ="delete")
 	void delete(@Param("productCartList")List<ProductCart> productCartList);
 	
-	@DeleteProvider(type = ProductCartSqlProvider.class, method ="deleteCartProductCart")
+	@DeleteProvider(type = ProductCartSqlProvider.class, method ="deleteCartProdCart")
 	void deleteCartProductCart(@Param("cartId")int cartId, @Param("productCartList")List<ProductCart> productCartList);
 	
 	//@SelectProvider(type = ProductCartSqlProvider.class, method ="select")

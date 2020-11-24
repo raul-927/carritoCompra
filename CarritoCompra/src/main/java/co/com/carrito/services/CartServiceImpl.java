@@ -53,4 +53,11 @@ public class CartServiceImpl implements CartService {
 		
 		return cart;
 	}
+
+	@Override
+	public void deleteProductCart(Cart cart) {
+		this.productCartMapper.deleteCartProductCart(cart.getCartId(), cart.getProductCart());
+		this.productCartMapper.delete(cart.getProductCart());
+		
+	}
 }

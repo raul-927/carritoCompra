@@ -27,9 +27,9 @@ public class ProductCartSqlProvider {
 			}
 		}}.toString();
 	}
-	public String deleteCartProductCart(int cartId, List<ProductCart> productCartList) {
+	public String deleteCartProdCart(int cartId, List<ProductCart> productCartList) {
 		return new SQL() {{
-			DELETE_FROM("cart_product_cart");
+			DELETE_FROM("cart_prod_cart");
 			WHERE("cart_id = " +String.valueOf(cartId));
 			for(ProductCart productCart: productCartList) {
 				if(productCart.getProdCartId() > 0) {

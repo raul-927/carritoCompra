@@ -46,6 +46,19 @@ public class CartController {
 	}
 	
 	@RequestMapping(
+			value ="/cartProduct", method =RequestMethod.POST,
+			consumes ={MediaType.APPLICATION_JSON_VALUE},
+			produces ={MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public ResponseEntity<?>insertProductCart(@RequestBody Cart cart, BindingResult bindingResult){
+		HttpHeaders headers = new HttpHeaders();
+		verificarCart(cart);
+		Cart cartResult = this.cartService.insertProductCart(cart);
+		
+		return new ResponseEntity<Cart>(cartResult, headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(
 			value ="/cart", method =RequestMethod.PUT,
 			consumes ={MediaType.APPLICATION_JSON_VALUE},
 			produces ={MediaType.APPLICATION_JSON_VALUE})
@@ -82,6 +95,20 @@ public class CartController {
 		List<Cart> cartResult = this.cartService.select(cart);
 		
 		return new ResponseEntity<List<Cart>>(cartResult, headers, HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(
+			value ="/cartProduct", method =RequestMethod.DELETE,
+			consumes ={MediaType.APPLICATION_JSON_VALUE},
+			produces ={MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public ResponseEntity<?>deleteProductCart(@RequestBody Cart cart){
+		HttpHeaders headers = new HttpHeaders();
+		verificarCart(cart);
+		this.cartService.deleteProductCart(cart);
+		
+		return new ResponseEntity<List<Cart>>(null, headers, HttpStatus.OK);
 	}
 	
 	private void verificarCart(Cart cart) {
