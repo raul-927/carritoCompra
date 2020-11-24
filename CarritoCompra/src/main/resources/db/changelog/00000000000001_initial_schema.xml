@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+        <property name="autoIncrement" value="true"/>
+        
+    <changeSet id="00000000000001" author="rhernandez">
+    
+        <createTable tableName="product">
+            <column name="prod_id" 					type="int" autoIncrement="true">
+                <constraints primaryKey="true" 		nullable="false"/>
+            </column>
+            <column name="nombre" 			type="varchar(50)"/>
+            <column name="sku" 				type="varchar(50)"/>
+            <column name="descripcion" 		type="varchar(50)"/>
+        </createTable>
+        
+        <createTable tableName="cart">
+            <column name="cart_id" 				type="int" autoIncrement="true">
+                <constraints primaryKey="true" 	nullable="false"/>
+            </column>
+            <column name="status" 				type="enum('PENDING', 'COMPLETED')"/>
+        </createTable>
+        
+        <createTable tableName="product_cart">
+            <column name="prod_cart_id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="prod_id" 		type="int"/>
+            <column name="quantity" 	type="int"/>
+        </createTable>
+        
+        <createTable tableName="cart_prod_cart">
+            <column name="pcp_id" 	type="int" autoIncrement="true">
+                <constraints primaryKey="true" 	nullable="false"/>
+            </column>
+            <column name="cart_id" 	type="int"/>
+            <column name="prod_cart_id" type="int"/>
+        </createTable>
+        
+        <addForeignKeyConstraint  
+         	baseColumnNames="prod_id"  
+            baseTableName="product_cart"  
+            constraintName="fk_product_prodcut_cart"
+            onDelete="CASCADE"  
+            onUpdate="RESTRICT"  
+            referencedColumnNames="prod_id"
+            referencedTableName="product"   
+            validate="true"/>
+
+
+		<addForeignKeyConstraint  
+         	baseColumnNames="cart_id"  
+            baseTableName="cart_prod_cart"  
+            constraintName="fk_cc_prod_cart"
+            onDelete="CASCADE"  
+            onUpdate="RESTRICT"  
+            referencedColumnNames="cart_id"
+            referencedTableName="cart"   
+            validate="true"/>
+
+		<addForeignKeyConstraint  
+         	baseColumnNames="prod_cart_id"  
+            baseTableName="cart_prod_cart"  
+            constraintName="fk_pp_prod_cart"
+            onDelete="CASCADE"  
+            onUpdate="RESTRICT"  
+            referencedColumnNames="prod_cart_id"
+            referencedTableName="product_cart"   
+            validate="true"/>
+
+	</changeSet>
+</databaseChangeLog>
